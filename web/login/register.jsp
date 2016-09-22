@@ -11,7 +11,13 @@
     int i = st.executeUpdate("insert into schulwebsite.users(email, username, password) values ('"+ email + "','" + user + "','" + pwd + "')");
     if (i > 0) {
         //session.setAttribute("userid", user);
-        response.sendRedirect("welcome.jsp");
+        Cookie username = new Cookie("username",
+                request.getParameter("rusername"));
+        username.setMaxAge(60*60*24);
+        username.setPath("/");
+        username.setDomain("localhost");
+        response.addCookie(username);
+        response.sendRedirect("http://localhost/");
         // out.print("Registration Successfull!"+"<a href='index.jsp'>Go to Login</a>");
     } else {
         response.sendRedirect("index.jsp");
