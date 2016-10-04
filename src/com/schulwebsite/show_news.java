@@ -43,18 +43,25 @@ public class show_news extends HttpServlet {
                 "                    data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n" +
                 "                <span class=\"sr-only\">Toggle navigation</span>\n" +
                 "            </button>\n" +
-                "            <a class=\"navbar-brand\" href=\"#\">Schule</a>\n" +
+                "            <a class=\"navbar-brand\" href=\"/\">Schule</a>\n" +
                 "        </div>\n" +
                 "        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n" +
                 "            <ul class=\"nav navbar-nav\">\n" +
-                "                <li class=\"active\"><a href=\"http://localhost\">Neuigkeiten <span class=\"sr-only\">(current)</span></a></li>\n" +
+                "                <li class=\"active\"><a href=\"/\">Neuigkeiten <span class=\"sr-only\">(current)</span></a></li>\n" +
+                "                 <li class=\"\"><a href=\"/search\">Suche <span class=\"sr-only\">(current)</span></a></li>\n"+
                 "            </ul>");
-
-        for (int i = 0; i < cookies.length; i++) {
-            String test = cookies[i].getName();
-            if(test.equals("username")){
-                username = cookies[i].getValue();
+        try
+        {
+            for (int i = 0; i < cookies.length; i++) {
+                String test = cookies[i].getName();
+                if(test.equals("username")){
+                    username = cookies[i].getValue();
+                }
             }
+        }
+        catch (Exception ex)
+        {
+
         }
         if(username != "")
         {
@@ -65,7 +72,7 @@ public class show_news extends HttpServlet {
                     "                        <ul class=\"dropdown-menu\">\n" +
                     "                        <li><a href=\"/admin\">Admin</a></li>\n" +
                     "                        <li role=\"separator\" class=\"divider\"></li>\n" +
-                    "                        <li><a href=\"/logout\">Logout</a></li>\n" +
+                    "                        <li><a href=\"/logout.php\">Logout</a></li>\n" +
                     "                        </ul>\n" +
                     "                        </li>\n" +
                     "                  </ul>");
@@ -100,11 +107,19 @@ public class show_news extends HttpServlet {
         String result="";
         rs = st.executeQuery("select * from schulwebsite.news WHERE id=" +id);
         if (rs.next()) {
-            result = "<div class=\"container\">\n" +
+            result = ("<div class=\"container\">\n" +
                     "  \n" +
-                    "  <div class=\"text-center\">\n" +
-                    " <center><img src=\" "+rs.getString("headerimage")+ "\" class=\"img-responsive\" alt=\"Responsive image\"></center>" +
-                    "    <h1>"+rs.getString("header")+"</h1>\n" +
+                    "  <div class=\"text-center\">\n");
+            if(!(rs.getString("headerimage").equals("")))
+            {
+                result += "<center><img src=\" "+rs.getString("headerimage")+ "\" class=\"img-responsive\" alt=\"Responsive image\"></center>";
+            }
+            else
+            {
+                result += "<center><img src=/img/default.png class=\"img-responsive\" alt=\"Responsive image\"></center>";
+            }
+
+            result += "    <h1>"+rs.getString("header")+"</h1>\n" +
                     "    <p class=\"lead\">"+rs.getString("content")+"</p>\n" +
                     "  </div>\n" +
                     "  \n" +
