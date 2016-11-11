@@ -16,7 +16,7 @@ import java.sql.*;
 @WebServlet(name = "show_news", urlPatterns = {"/a/b/c", "/servlets/news"})
 public class show_news extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username="";
+    String username="";
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -34,58 +34,12 @@ public class show_news extends HttpServlet {
                 "    <script src=\"js/jquery-3.1.0.min.js\"></script>\n" +
                 "    <script src=\"js/bootstrap.js\"></script>\n" +
                 "</head>");
-        out.println("<body>\n" +
-                "<nav class=\"navbar navbar-default\">\n" +
-                "    <div class=\"container-fluid\">\n" +
-                "        <!-- Brand and toggle get grouped for better mobile display -->\n" +
-                "        <div class=\"navbar-header\">\n" +
-                "            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\"\n" +
-                "                    data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n" +
-                "                <span class=\"sr-only\">Toggle navigation</span>\n" +
-                "            </button>\n" +
-                "            <a class=\"navbar-brand\" href=\"/\">Schule</a>\n" +
-                "        </div>\n" +
-                "        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n" +
-                "            <ul class=\"nav navbar-nav\">\n" +
-                "                <li class=\"active\"><a href=\"/\">Neuigkeiten <span class=\"sr-only\">(current)</span></a></li>\n" +
-                "                 <li class=\"\"><a href=\"/search\">Suche <span class=\"sr-only\">(current)</span></a></li>\n"+
-                "            </ul>");
-        try
-        {
-            for (int i = 0; i < cookies.length; i++) {
-                String test = cookies[i].getName();
-                if(test.equals("username")){
-                    username = cookies[i].getValue();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
+        out.println("<body>\n<nav class=\"navbar navbar-default\">");
+        nav navi = new nav();
+        navi.set_toggle("news");
+        out.println(navi.getNav(request));
+        out.println("</nav>");
 
-        }
-        if(username != "")
-        {
-            out.println("<ul class=\"nav navbar-nav navbar-right\">\n" +
-                    "                      <li class=\"dropdown\">\n" +
-                    "                        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" \n" +
-                    "                        aria-expanded=\"false\">Welcome  "+ username +" <span class=\"caret\"></span></a>\n" +
-                    "                        <ul class=\"dropdown-menu\">\n" +
-                    "                        <li><a href=\"/admin\">Admin</a></li>\n" +
-                    "                        <li role=\"separator\" class=\"divider\"></li>\n" +
-                    "                        <li><a href=\"/logout.php\">Logout</a></li>\n" +
-                    "                        </ul>\n" +
-                    "                        </li>\n" +
-                    "                  </ul>");
-        }
-        else{
-            out.println("<ul class=\"nav navbar-nav navbar-right\">\n" +
-                    "                        <li><a href=\"/login\">Login</a></li>\n" +
-                    "                      </ul>");
-        }
-
-        out.println("        </div>\n" +
-                "    </div>\n" +
-                "</nav>");
         try {
             out.println(getNews(request.getParameter("newsid")));
         } catch (SQLException e) {

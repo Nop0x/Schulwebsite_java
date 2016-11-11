@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.schulwebsite.nav" %>
+<%@ page import="java.io.PrintWriter" %><%--
   Created by IntelliJ IDEA.
   User: Marvin
   Date: 20.09.2016
@@ -19,30 +20,12 @@
 </head>
 <body>
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Schule</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Neuigkeiten</a></li>
-                <li><a href="/search">Suche</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Login<span class="sr-only">(current)</span></a></li>
-            </ul>
-        </div>
-    </div>
+<%
+    nav navi = new nav();
+    navi.set_toggle("login");
+    out.println(navi.getNav(request));
+%>
 </nav>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
