@@ -15,6 +15,9 @@ import java.sql.*;
  */
 @WebServlet(name = "show_news", urlPatterns = {"/a/b/c", "/servlets/news"})
 public class show_news extends HttpServlet {
+    /*
+    zeigt news anhand übergebener variablen an
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String username="";
         try {
